@@ -2,8 +2,8 @@ spring:
   main:
     web-application-type: reactive
   r2dbc:
-    #url: r2dbc:postgresql:tcp://localhost:5432/learn
-    url: r2dbc:postgresql://localhost:5432/learn
+    url: r2dbc:postgresql:tcp://localhost:5432/learn
+    #url: r2dbc:postgresql://localhost:5432/learn
     username: postgres
     password: db-wrz2z
 server:

@@ -28,7 +28,28 @@ in the com/example package, letting it find the controllers.
 
 ### Postgressql
 
-配置
+#### R2DBC配置
+
+```yml
+spring:
+  main:
+    web-application-type: reactive
+  r2dbc:
+    #两个都可以
+    #url: r2dbc:postgresql:tcp://localhost:5432/learn
+    url: r2dbc:postgresql://localhost:5432/learn
+    username: postgres
+    password: db-wrz2z
+```
+
+#### Repository
+
+ReactiveCrudRepository 与 R2dbcRepository
+
+```java
+@NoRepositoryBean
+public interface R2dbcRepository<T, ID> extends ReactiveCrudRepository<T, ID>, ReactiveSortingRepository<T, ID>, ReactiveQueryByExampleExecutor<T> {}
+```
 
 ## OAuth2
 
