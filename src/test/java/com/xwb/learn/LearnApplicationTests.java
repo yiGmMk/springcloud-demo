@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.xwb.learn.domain.Department;
@@ -49,6 +50,7 @@ class LearnApplicationTests {
 		Mono.just("Cating")
 				.map(n -> n.toUpperCase())
 				.map(up -> "\n------------[in func]Hello," + up + "!-------------------\n")
+				.timeout(Duration.ofSeconds(1))
 				.subscribe(txt -> {
 					LearnApplicationTests.log.error(txt);
 					System.out.println("system" + txt);
@@ -353,12 +355,37 @@ class LearnApplicationTests {
 		int id = 1;
 		Mono<Department> shop = this.webclient
 				.get()
-				.uri("http://localhost:8080/{id}", id)
+				.uri("/{id}", id)
 				.retrieve()
 				.bodyToMono(Department.class);
-		shop.subscribe(s -> {
-			System.out.println(s.toString());
-		});
+		System.out.println("subcribe");
+		shop.timeout(Duration.ofSeconds(1))// 超时设置
+				.subscribe(s -> {
+					System.out.println("\n---------------------------"
+							+ s.toString() + "-----------------------------------\n");
+				}, error -> {// 错误处理
+					System.out.println(error);
+				});
+	}
+
+	@Test
+	public void baseClientError() {
+		int id = 1;
+		Mono<Department> shop = this.webclient
+				.get()
+				.uri("/{id}", id)
+				.retrieve()
+				.onStatus(status -> status == HttpStatus.NOT_FOUND,
+						response -> Mono.just(new UnknownError()))
+				.bodyToMono(Department.class);
+		System.out.println("subcribe");
+		shop.timeout(Duration.ofSeconds(1))// 超时设置
+				.subscribe(s -> {
+					System.out.println("\n---------------------------"
+							+ s.toString() + "-----------------------------------\n");
+				}, error -> {// 错误处理
+					System.out.println(error);
+				});
 	}
 
 	public static void main(String[] args) {

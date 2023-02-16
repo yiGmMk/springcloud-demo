@@ -1,4 +1,4 @@
-package com.xwb.learn;
+package com.xwb.learn.config;
 
 import java.io.IOException;
 
@@ -18,7 +18,7 @@ public class AuthFilterRegistrationBean extends FilterRegistrationBean<Filter> {
     @Override
     public Filter getFilter() {
         // Filter排序
-        setOrder(10);
+        this.setOrder(10);
         return new AuthFilter();
     }
 

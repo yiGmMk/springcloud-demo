@@ -6,8 +6,15 @@ spring:
     #url: r2dbc:postgresql://localhost:5432/learn
     username: postgres
     password: db-wrz2z
+  cloud:
+    gateway:
+      httpclient:
+        pool:
+          max-idle-time: 5000
 server:
   # 实际监听端口:
   port: 8080
   # 从反向代理读取相关的HTTP Header:
   forward-headers-strategy: native
+  tomcat:
+    connection-timeout: 10000
