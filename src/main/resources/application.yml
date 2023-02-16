@@ -1,0 +1,13 @@
+spring:
+  main:
+    web-application-type: reactive
+  r2dbc:
+    #url: r2dbc:postgresql:tcp://localhost:5432/learn
+    url: r2dbc:postgresql://localhost:5432/learn
+    username: postgres
+    password: db-wrz2z
+server:
+  # 实际监听端口:
+  port: 8080
+  # 从反向代理读取相关的HTTP Header:
+  forward-headers-strategy: native

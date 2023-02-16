@@ -1,0 +1,40 @@
+services:
+  # backend:
+  #   build: src
+  #   ports:
+  #     - 8080:8080
+  #   environment:
+  #     - POSTGRES_DB=example
+  #   networks:
+  #     - spring-postgres
+  db:
+    image: postgres
+    restart: always
+    secrets:
+      - db-password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - spring-postgres
+    environment:
+      - POSTGRES_DB=learn
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    ports:
+      - 5432:5432
+  pgadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 8001:80
+    networks:
+      - spring-postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: learn@qq.com
+      PGADMIN_DEFAULT_PASSWORD: db-wrz2z
+volumes:
+  db-data:
+secrets:
+  db-password:
+    file: db/password.txt
+networks:
+  spring-postgres:
