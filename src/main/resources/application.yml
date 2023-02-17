@@ -18,3 +18,28 @@ server:
   forward-headers-strategy: native
   tomcat:
     connection-timeout: 10000
+  # https config,处理https请求
+  # ssl:
+  #   key-store: file:///path/to/mykeys.jks
+  #   key-store-password: letmein
+  #   key-password: letmein
+
+# 日志相关配置
+# 为了完全控制日志的配置，可以在类路径的根目录下（在“src/main/resources”中）创建一个logback.xml文件
+logging:
+  level:
+    root: WARN
+    #等同于
+    #org.springframework.security: DEBUG
+    org:
+      springframework:
+        security: DEBUG
+  # 写入指定文件
+  # file:
+  #   path: /var/logs
+  #   file: learn.log
+
+# 自定义配置,分页数量,使用@ConfigurationProperties注解读取
+learn:
+  pagination:
+    pagesize: 20
