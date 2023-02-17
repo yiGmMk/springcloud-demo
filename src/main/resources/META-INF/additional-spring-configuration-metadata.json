@@ -1,0 +1,9 @@
+{
+    "properties": [
+        {
+            "name": "learn.pagination.pagesize",
+            "type": "java.lang.Integer",
+            "description": "A description for 'learn.pagination.pagesize'"
+        }
+    ]
+}
