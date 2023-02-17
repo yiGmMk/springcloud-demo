@@ -11,6 +11,11 @@ spring:
       httpclient:
         pool:
           max-idle-time: 5000
+  # 自动生成api, 依赖:spring-boot-starter-data-rest
+  # !!!! 未生效?????
+  data:
+    rest:
+      base-path: /data-api
 server:
   # 实际监听端口:
   port: 8080

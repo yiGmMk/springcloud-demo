@@ -24,6 +24,21 @@ in the com/example package, letting it find the controllers.
 
 ### Bean要实现getter/setter方法
 
+### profiles
+
+使用@Profile生命,Bean仅在特定环境才创建
+
+```java
+@Bean
+@Profile("dev") // 仅在dev下激活
+public CommandLineRunner dataLoader(IngredientRepository repo,
+      UserRepository userRepo, PasswordEncoder encoder) {
+
+}
+
+@Profile("!prod") // 非prod环境激活
+```
+
 ## 数据库
 
 ### 数据库配置
@@ -75,7 +90,7 @@ public interface R2dbcRepository<T, ID> extends ReactiveCrudRepository<T, ID>, R
 
 ```java
 // 简单的查询语句 参考: https://www.cnblogs.com/binecy/p/15004375.html
-// 规则: 
+// 规则:
 // findByName           ->findBy<fieldName>
 // findByIdGreaterThan  ->findBy<fieldName>GreaterThan
 public interface DepartmentRepository extends R2dbcRepository<Department, Long> {
