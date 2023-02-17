@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.xwb.learn.domain.Person;
 import com.xwb.learn.domain.PersonRepository;
 
+import reactor.core.publisher.Mono;
+
 @Configuration
 @RestController
 public class PersonController {
@@ -21,13 +23,16 @@ public class PersonController {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/register/{name}")
-    public String register(@PathVariable("name") String name) {
+    public Mono<Person> register(@PathVariable("name") String name) {
         System.out.println("name=" + name);
         try {
-            this.personRepo.save(new Person((long) 55, name, this.passwordEncoder.encode(name)));
+            Mono<Person> p = this.personRepo.save(new Person((long) 55, name, this.passwordEncoder.encode(name)));
+            System.out.println("add person" + p.toString());
+            return p;
         } catch (Exception e) {
             System.out.println("注册失败" + e);
         }
-        return "redirect:/login";
+        // return "redirect:/login";
+        return null;
     }
 }

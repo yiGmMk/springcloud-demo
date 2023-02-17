@@ -4,9 +4,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+
+import com.xwb.learn.domain.PersonRepository;
 
 // Spring Security的基础配置类
 @Configuration
@@ -21,7 +24,7 @@ public class SecurityConfig {
          * Pbkdf2PasswordEncoder：使用PBKDF2加密。
          * SCryptPasswordEncoder：使用Scrypt哈希加密。
          * StandardPasswordEncoder：使用SHA-256哈希加密。
-         * 
+         *
          */
         return new BCryptPasswordEncoder();
     }
@@ -30,14 +33,17 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .authorizeExchange()
-                .pathMatchers("/").hasAuthority("user")
-                .anyExchange().permitAll()
+                .pathMatchers("/register")
+                .permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
                 .and()
-                // .oauth2Login()// oauth2
-                // .and()
                 .build();
     }
+
+    // TODO:
+    // @Bean
+    // UserDetailsService userDetailsService(PersonRepository personRepo) {
+    // return name -> personRepo.findByName(name);
+    // }
 }

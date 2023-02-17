@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.xwb.learn.domain.Department;
@@ -22,6 +23,7 @@ import reactor.core.publisher.Mono;
 @CrossOrigin(origins = "*")
 @ConfigurationProperties(prefix = "learn.pagination")
 @Validated
+@RequestMapping("/shop")
 public class ShopController {
 
     @Min(value = 10, message = "分页数量最小为5")
